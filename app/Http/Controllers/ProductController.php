@@ -12,8 +12,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get() ->toArray();
-        return view('product.index',compact("products"));
+        $products = Product::get();
+        return view('products.index',compact("products"));
     }
 
     /**
@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        return view('products.create');
     }
 
     /**
@@ -47,7 +47,7 @@ class ProductController extends Controller
         'description' => $data['description'],
     ]);
 
-    return redirect('product');  
+    return redirect('products');  
 }
 
 
@@ -65,7 +65,7 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product=Product::findOrFail($id);
-        return view('product.edit',compact("product"));
+        return view('products.edit',compact("product"));
     }
 
     /**
@@ -73,27 +73,26 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
 {
-    $data = $request->validate([
-        'name' => 'required',
-        'price' => 'required',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif', 
-        'count_in_stock' => 'required|integer',
-        'description' => 'required',
-    ]);
-
-    $imagePath = $request->file('image')->store('products', 'public');
-    
     $product = Product::findOrFail($id);
+    $data = $request->validate([
+        'image' => 'image|mimes:jpeg,png,jpg,gif',
+        'count_in_stock' => 'integer'
+    ]);
+    $imagePath = $product->image;
+    if($request->hasFile('image')){
+    $imagePath = $request->file('image')->store('products', 'public');
+    }
+    
     
     $product->update([
-        'name' => $data['name'],
-        'price' => $data['price'],
+        'name' => $request ->name,
+        'price' => $request ->price,
         'image' => $imagePath, 
         'count_in_stock' => $data['count_in_stock'],
-        'description' => $data['description'],
+        'description' => $request ->description,
     ]);
     
-    return redirect('product');  
+    return redirect('products');  
 }
 
     /**
@@ -102,6 +101,6 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         Product::findOrFail($id) ->delete();
-        return redirect('product'); 
+        return redirect('products'); 
     }
 }

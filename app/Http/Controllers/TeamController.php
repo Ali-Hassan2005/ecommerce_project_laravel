@@ -12,8 +12,8 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::get() ->toArray();
-        return view('team.index',compact("teams"));
+        $teams = Team::get();
+        return view('teams.index',compact("teams"));
     }
 
     /**
@@ -21,7 +21,7 @@ class TeamController extends Controller
      */
     public function create()
     {
-        return view('team.create');
+        return view('teams.create');
     }
 
     /**
@@ -45,7 +45,7 @@ class TeamController extends Controller
         'bio' => $data['bio'],
     ]);
 
-    return redirect('team');  
+    return redirect('teams');  
 
 }
 
@@ -64,32 +64,32 @@ class TeamController extends Controller
     public function edit(string $id)
     {
         $team=Team::findOrFail($id);
-        return view('team.edit',compact("team"));
+        return view('teams.edit',compact("team"));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-{
-    $data = $request->validate([
-        'name' => 'required',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif', 
-        'job_title' => 'required',
-        'bio' => 'required',
-    ]);
-    $imagePath = $request->file('image')->store('team', 'public');
-
+    {
     $team = Team::findOrFail($id);
+
+    $data = $request->validate([
+        'image' => 'image|mimes:jpeg,png,jpg,gif'
+    ]);
+    $imagePath = $team->image;
+    if($request->hasFile('image')){
+    $imagePath = $request->file('image')->store('team', 'public');
+    }
     
     $team->update([
-        'name' => $data['name'],
+        'name' => $request ->name,
         'image' => $imagePath, 
-        'job_title' => $data['job_title'],
-        'bio' => $data['bio'],
+        'job_title' => $request ->job_title,
+        'bio' => $request -> bio,
     ]);
     
-    return redirect('team');  
+    return redirect('teams');  
 }
 
     /**
@@ -98,7 +98,7 @@ class TeamController extends Controller
     public function destroy(string $id)
     {
         Team::findOrFail($id) ->delete();
-        return redirect('team'); 
+        return redirect('teams'); 
     }
 }
 

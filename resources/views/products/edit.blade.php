@@ -6,8 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-  <p><a href='/product'>All products</a>
-    <form action= "/product/{{$product ->id}}" method="post">
+    <p><a href={{route("products.index")}}>All products</a>
+    <form action= {{route("products.update",$product ->id)}} method="post"  enctype="multipart/form-data">
         @csrf
         @method("PUT")
         <table align="center">
@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <th>image:</th>
-                <td><input type="file" name="image" value={{$product ->image}} /></td>
+                <td><input type="file" name="image" /></td>
             </tr>
             <tr>
                 <th>price:</th>
@@ -25,7 +25,7 @@
             </tr>
             <tr>
                 <th>Count in stock:</th>
-                <td><input type="number" name="count_in_stock" value={{$product ->count_in_stock}} /></td>
+                <td><input type="number" name="count_in_stock" value={{(int)$product ->count_in_stock}} /></td>
             </tr>
             <tr>
                 <th>Cdescription:</th>

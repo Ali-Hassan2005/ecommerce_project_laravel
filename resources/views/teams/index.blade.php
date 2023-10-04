@@ -1,5 +1,5 @@
 <h2>team</h2>
-<p><a href='team/create'>Create</a></p>
+<p><a href={{route('teams.create')}}>Create</a></p>
 
 @foreach ($teams as $team)
     <?php
@@ -9,8 +9,8 @@
     
     ?>
     <div>
-    <p style="display: inline">{{ $id }}) {{ $name }} <a href='team/{{ $id }}/edit'>edit</a></p>
-    <form style="display: inline" action='/team/{{ $id }}' method='POST'>
+    <p style="display: inline">{{ $id }}) {{ $name }} <a href={{route('teams.edit',$id)}}>edit</a></p>
+    <form style="display: inline" action={{route('teams.destroy')}} method='POST'>
         @method("DELETE")
         @csrf
         <input type='submit' value='Delete'>

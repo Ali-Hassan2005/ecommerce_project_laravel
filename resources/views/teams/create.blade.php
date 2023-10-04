@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Product</title>
+    <title>Create member</title>
 </head>
 <body>
-    <p><a href='/product'>All products</a>
-    <form action="/product" method="post" enctype="multipart/form-data">
+    <p><a href={{route('teams.index')}}>teams</a>
+    <form action={{route('teams.store')}} method="post" enctype="multipart/form-data">
         @csrf
         @method("POST")
         <table align="center">
@@ -20,16 +20,12 @@
                 <td><input type="file" name="image" /></td>
             </tr>
             <tr>
-                <th>Price:</th>
-                <td><input type="number" name="price" /></td>
+                <th>job_title:</th>
+                <td><input type="text" name="job_title" /></td>
             </tr>
             <tr>
-                <th>Count in stock:</th>
-                <td><input type="number" name="count_in_stock" /></td>
-            </tr>
-            <tr>
-                <th>Description:</th>
-                <td><input type="text" name="description" /></td>
+                <th>bio:</th>
+                <td><input type="text" name="bio" /></td>
             </tr>
             <tr>
                 <td></td>

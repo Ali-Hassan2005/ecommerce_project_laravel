@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Create testimonial</title>
 </head>
 <body>
-  <p><a href='/team'>team</a>
-    <form action= "/team/{{$team ->id}}" method="post">
+    <p><a href={{route("testimonials.index")}}>All testimonials</a>
+        <form action= {{route("testimonials.store")}} method="post"  enctype="multipart/form-data">
         @csrf
-        @method("PUT")
+        @method("POST")
         <table align="center">
             <tr>
                 <th>Name:</th>
-                <td><input type="text" name="name" value="{{$team ->name}}" /></td>
+                <td><input type="text" name="name" /></td>
             </tr>
             <tr>
                 <th>Image:</th>
-                <td><input type="file" name="image" value="{{$team ->image}}" /></td>
+                <td><input type="file" name="image" /></td>
             </tr>
             <tr>
-                <th>job_title:</th>
-                <td><input type="text" name="job_title" value="{{$team ->job_title}}" /></td>
+                <th>jop_title:</th>
+                <td><input type="text" name="jop_title" /></td>
             </tr>
             <tr>
-                <th>bio:</th>
-                <td><input type="text" name="bio" value="{{$team ->bio}}" /></td>
+                <th>description:</th>
+                <td><input type="text" name="description" /></td>
             </tr>
             <tr>
                 <td></td>
@@ -35,6 +35,5 @@
             </tr>
         </table>
     </form>
-    
 </body>
 </html>

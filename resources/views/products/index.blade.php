@@ -1,5 +1,5 @@
 <h2>Products</h2>
-<p><a href='product/create'>Create</a></p>
+<p><a href={{route("products.create")}}>Create</a></p>
 
 @foreach ($products as $product)
     <?php
@@ -9,8 +9,8 @@
     
     ?>
     <div>
-    <p style="display: inline">{{ $id }}) {{ $name }} <a href='product/{{ $id }}/edit'>edit</a></p>
-    <form style="display: inline" action='/product/{{ $id }}' method='POST'>
+    <p style="display: inline">{{ $id }}) {{ $name }} <a href={{route("products.edit",$id)}}>edit</a></p>
+    <form style="display: inline" action={{route("products.destroy",$id)}} method='POST'>
         @method("DELETE")
         @csrf
         <input type='submit' value='Delete'>
